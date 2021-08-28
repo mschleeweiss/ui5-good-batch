@@ -1,0 +1,133 @@
+:root {
+    --foreground: #ccc;
+    --background-primary: #202020;
+    --background-secondary: #303030;
+    --green: #50fa7b;
+    --yellow: #f1fa8c;
+    --red: #ff5555;
+    --blue: #6272a4;
+    --pink: #ff79c6;
+    --cyan: #8be9fd;
+    --purple:#bd93f9;
+    --orange:#ffb86c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    color: var(--foreground);
+}
+
+div {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+.flex {
+    height: 100%;
+    display: flex;
+}
+
+.flex-center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    margin: 1rem;
+}
+
+.master {
+    background-color: var(--background-primary);
+    height: 100%;
+    width: 33%;
+    overflow: auto;
+    border-right: 1px solid var(--foreground);
+}
+
+.entry {
+    display: flex;
+    align-items: baseline;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease-out;
+}
+
+.entry:hover {
+    background-color: var(--background-secondary);
+}
+
+.entry .path {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    direction: rtl;
+    text-align: left;
+    margin-left: 0.5rem;
+}
+
+.entry .time {
+    font-size: 0.5rem;
+}
+
+hr {
+    height: 1px;
+    border-width: 0;
+    color: gray;
+    background-color: gray;
+    margin: 0rem 0.5rem
+}
+
+.detail {
+    background-color: var(--background-secondary);
+    height: 100%;
+    width: 67%;
+    overflow: auto;
+    padding: 0.5rem 1rem;
+}
+
+.request {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.tag {
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    border-radius: 3px;
+    padding: 0.2rem;
+    margin-inline-end: 0.25rem;
+    color: white;
+}
+
+.tag.type {
+    background-color: var(--pink);
+}
+
+.tag.ver {
+    background-color: var(--blue);
+}
+
+.renderjson a              { text-decoration: none; color: var(--orange)}
+.renderjson .disclosure    { color: var(--pink);
+                             font-size: 150%; }
+.renderjson .syntax        { color: var(--foreground); }
+.renderjson .string        { color: var(--yellow); }
+.renderjson .number        { color: var(--purple); }
+.renderjson .boolean       { color: var(--purple); }
+.renderjson .key           { color: var(--green); }
+.renderjson .keyword       { color: var(--purple); }
+.renderjson .object.syntax { color: var(--foreground); }
+.renderjson .array.syntax  { color: var(--foreground); }
