@@ -1,5 +1,6 @@
 :root {
-    --foreground: #ccc;
+    --foreground-primary: #ccc;
+    --foreground-secondary: #fff;
     --background-primary: #202020;
     --background-secondary: #303030;
     --green: #50fa7b;
@@ -8,8 +9,36 @@
     --blue: #6272a4;
     --pink: #ff79c6;
     --cyan: #8be9fd;
-    --purple:#bd93f9;
-    --orange:#ffb86c;
+    --purple: #bd93f9;
+    --orange: #ffb86c;
+    --border: #808080;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../webfonts/roboto/Roboto-Bold.woff2') format('woff2'),
+        url('../webfonts/roboto/Roboto-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../webfonts/roboto/Roboto-Regular.woff2') format('woff2'),
+        url('../webfonts/roboto/Roboto-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url('../webfonts/roboto_mono/RobotoMono-Regular.woff2') format('woff2'),
+        url('../webfonts/roboto_mono/RobotoMono-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 * {
@@ -19,7 +48,9 @@
 
 html, body {
     height: 100%;
-    color: var(--foreground);
+    color: var(--foreground-primary);
+    font-family: 'Roboto';
+    font-weight: normal;
 }
 
 div {
@@ -52,7 +83,7 @@ a {
     height: 100%;
     width: 33%;
     overflow: auto;
-    border-right: 1px solid var(--foreground);
+    border-right: 1px solid var(--border);
 }
 
 .entry {
@@ -64,6 +95,10 @@ a {
 }
 
 .entry:hover {
+    background-color: var(--background-secondary);
+}
+
+.entry.selected {
     background-color: var(--background-secondary);
 }
 
@@ -83,9 +118,9 @@ a {
 hr {
     height: 1px;
     border-width: 0;
-    color: gray;
-    background-color: gray;
-    margin: 0rem 0.5rem
+    color: var(--border);
+    background-color: var(--border);
+    margin: 0rem;
 }
 
 .detail {
@@ -106,10 +141,11 @@ hr {
 .tag {
     text-transform: uppercase;
     font-size: 0.6rem;
+    font-family: 'Roboto Mono';
     border-radius: 3px;
     padding: 0.2rem;
     margin-inline-end: 0.25rem;
-    color: white;
+    color: var(--foreground-secondary);
 }
 
 .tag.type {
@@ -120,14 +156,57 @@ hr {
     background-color: var(--blue);
 }
 
-.renderjson a              { text-decoration: none; color: var(--orange)}
-.renderjson .disclosure    { color: var(--pink);
-                             font-size: 150%; }
-.renderjson .syntax        { color: var(--foreground); }
-.renderjson .string        { color: var(--yellow); }
-.renderjson .number        { color: var(--purple); }
-.renderjson .boolean       { color: var(--purple); }
-.renderjson .key           { color: var(--green); }
-.renderjson .keyword       { color: var(--purple); }
-.renderjson .object.syntax { color: var(--foreground); }
-.renderjson .array.syntax  { color: var(--foreground); }
+.request .path {
+    color: var(--foreground-secondary);
+    margin-inline-start: 0.5rem;
+}
+
+.renderjson {
+    font-family: 'Roboto Mono';
+    font-size: 0.65rem;
+    overflow: auto;
+    background-color: var(--background-primary);
+    padding: 0.5rem;
+}
+
+.renderjson a {
+    text-decoration: none;
+    color: var(--orange);
+}
+
+.renderjson .disclosure {
+    color: var(--pink);
+    font-size: 150%;
+}
+
+.renderjson .syntax {
+    color: var(--foreground-primary);
+}
+
+.renderjson .string {
+    color: var(--yellow);
+}
+
+.renderjson .number {
+    color: var(--purple);
+}
+
+.renderjson .boolean {
+    color: var(--purple);
+}
+
+.renderjson .key {
+    color: var(--green);
+}
+
+.renderjson .keyword {
+    color: var(--purple);
+}
+
+.renderjson .object.syntax {
+    color: var(--foreground-primary);
+}
+
+.renderjson .array.syntax {
+    color: var(--foreground-primary);
+}

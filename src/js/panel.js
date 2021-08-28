@@ -17,6 +17,13 @@ function createEntry(data) {
     const entryDiv = document.createElement("div");
     entryDiv.className = "entry";
     entryDiv.addEventListener("click", (ev) => {
+        ;
+        for (let el of document.getElementsByClassName("selected")) {
+            el.classList.remove("selected");
+        }
+        if (!entryDiv.classList.contains("selected")) {
+            entryDiv.classList.add("selected");
+        }
         showDetails(data);
     });
     entryDiv.append(timeSpan, pathSpan);
@@ -26,16 +33,15 @@ function createEntry(data) {
         masterDiv.append(document.createElement("hr"));
     }
     masterDiv.append(entryDiv);
+    entryDiv.scrollIntoView({
+        behavior: 'smooth',
+    });
 }
 
 function showDetails(data) {
+
     const detailDiv = document.getElementById("detail");
     detailDiv.innerHTML = "";
-
-    const pathH5 = document.createElement("h5");
-    pathH5.innerText = data.pathname;
-
-    detailDiv.append(pathH5);
 
     data.reqTxts.forEach((txt, i) => {
         const txtDiv = document.createElement("div");
@@ -49,13 +55,14 @@ function showDetails(data) {
         const typeSpan = document.createElement("span");
         typeSpan.className = "tag type";
         typeSpan.innerText = type;
-        
+
         const verSpan = document.createElement("span");
         verSpan.className = "tag ver";
         verSpan.innerText = version;
 
         const pathSpan = document.createElement("span");
-        pathSpan.innerText = path;
+        pathSpan.innerText = decodeURI(path);
+        pathSpan.className = "path"
         txtDiv.append(typeSpan, verSpan, pathSpan);
 
         detailDiv.append(txtDiv);
