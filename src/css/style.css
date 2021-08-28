@@ -2,7 +2,9 @@
     --foreground-primary: #ccc;
     --foreground-secondary: #fff;
     --background-primary: #202020;
-    --background-secondary: #303030;
+    --background-secondary: #2d2d2d;
+    --background-hover: #031E34;
+    --background-selected: #1F5078;
     --green: #50fa7b;
     --yellow: #f1fa8c;
     --red: #ff5555;
@@ -16,8 +18,7 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('../webfonts/roboto/Roboto-Bold.woff2') format('woff2'),
-        url('../webfonts/roboto/Roboto-Bold.woff') format('woff');
+    src: url('../webfonts/roboto/Roboto-Bold.woff2') format('woff2'), url('../webfonts/roboto/Roboto-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -25,8 +26,7 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('../webfonts/roboto/Roboto-Regular.woff2') format('woff2'),
-        url('../webfonts/roboto/Roboto-Regular.woff') format('woff');
+    src: url('../webfonts/roboto/Roboto-Regular.woff2') format('woff2'), url('../webfonts/roboto/Roboto-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -34,8 +34,7 @@
 
 @font-face {
     font-family: 'Roboto Mono';
-    src: url('../webfonts/roboto_mono/RobotoMono-Regular.woff2') format('woff2'),
-        url('../webfonts/roboto_mono/RobotoMono-Regular.woff') format('woff');
+    src: url('../webfonts/roboto_mono/RobotoMono-Regular.woff2') format('woff2'), url('../webfonts/roboto_mono/RobotoMono-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -79,27 +78,56 @@ a {
 }
 
 .master {
-    background-color: var(--background-primary);
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 33%;
-    overflow: auto;
+    background-color: var(--background-primary);
     border-right: 1px solid var(--border);
 }
 
+.header {
+    padding: 0.5rem;
+    background-color: var(--background-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.header button {
+    cursor: pointer;
+    color: var(--foreground-primary);
+    background-color: transparent;
+    border: 0;
+}
+
+.header button:hover {
+    color: var(--foreground-secondary);
+}
+
+.master-content {
+    flex-grow: 1;
+    overflow: auto;
+}
+
 .entry {
+    font-family: 'Roboto Mono';
+    font-size: 0.65rem;
     display: flex;
     align-items: baseline;
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 1rem;
     transition: all 0.3s ease-out;
 }
 
-.entry:hover {
+.entry:nth-child(odd) {
     background-color: var(--background-secondary);
 }
 
+.entry:hover {
+    background-color: var(--background-hover);
+}
+
 .entry.selected {
-    background-color: var(--background-secondary);
+    background-color: var(--background-selected);
 }
 
 .entry .path {
@@ -109,10 +137,6 @@ a {
     direction: rtl;
     text-align: left;
     margin-left: 0.5rem;
-}
-
-.entry .time {
-    font-size: 0.5rem;
 }
 
 hr {
@@ -127,15 +151,28 @@ hr {
     background-color: var(--background-secondary);
     height: 100%;
     width: 67%;
-    overflow: auto;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+.detail-content {
     padding: 0.5rem 1rem;
+    height: 100%;
+    overflow: auto;
 }
 
 .request {
     display: flex;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 0.5rem;
+}
+
+.request:first-child {
+    margin-top: 0.5rem;
 }
 
 .tag {

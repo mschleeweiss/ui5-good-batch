@@ -1,6 +1,17 @@
 renderjson.set_icons('+', '-');
 renderjson.set_show_to_level("all");
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    document.getElementById("clear-btn").addEventListener("click", (ev) => {
+        document.getElementById("batch-list").innerHTML = "";
+        document.getElementById("messagepage").classList.remove("hidden");
+        const detailDiv = document.getElementById("resp-list");
+        detailDiv.innerHTML = "";
+    });
+});
+
+
+
 function createEntry(data) {
     const pathSpan = document.createElement("span");
     pathSpan.className = "path";
@@ -17,7 +28,6 @@ function createEntry(data) {
     const entryDiv = document.createElement("div");
     entryDiv.className = "entry";
     entryDiv.addEventListener("click", (ev) => {
-        ;
         for (let el of document.getElementsByClassName("selected")) {
             el.classList.remove("selected");
         }
@@ -28,10 +38,7 @@ function createEntry(data) {
     });
     entryDiv.append(timeSpan, pathSpan);
 
-    const masterDiv = document.getElementById("master");
-    if (masterDiv.innerHTML.trim().length > 0) {
-        masterDiv.append(document.createElement("hr"));
-    }
+    const masterDiv = document.getElementById("batch-list");
     masterDiv.append(entryDiv);
     entryDiv.scrollIntoView({
         behavior: 'smooth',
@@ -39,8 +46,13 @@ function createEntry(data) {
 }
 
 function showDetails(data) {
+    const msgpageClasses = document.getElementById("messagepage").classList;
 
-    const detailDiv = document.getElementById("detail");
+    if (!msgpageClasses.contains("hidden")) {
+        msgpageClasses.add("hidden");
+    }
+
+    const detailDiv = document.getElementById("resp-list");
     detailDiv.innerHTML = "";
 
     data.reqTxts.forEach((txt, i) => {
