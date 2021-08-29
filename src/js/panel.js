@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 });
 
-
-
 function createEntry(data) {
     const pathSpan = document.createElement("span");
     pathSpan.className = "path";
@@ -53,6 +51,7 @@ function showDetails(data) {
     }
 
     const detailDiv = document.getElementById("resp-list");
+    detailDiv.scrollTop = 0;
     detailDiv.innerHTML = "";
 
     data.reqTxts.forEach((txt, i) => {
@@ -78,7 +77,7 @@ function showDetails(data) {
         txtDiv.append(typeSpan, verSpan, pathSpan);
 
         detailDiv.append(txtDiv);
-        detailDiv.append(renderjson(data.respJSON[i]));
+        detailDiv.append(renderjson(data.respJSON[i] ?? data.respJSON[data.respJSON.length - 1]));
     });
 }
 
@@ -88,7 +87,7 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
             const pathname = new URL(request.request.url).pathname
 
             const reqBody = request.request.postData.text;
-            const reqParts = extractParts(reqBody);
+            const reqParts = extractBaseParts(reqBody);
 
             const reqTxts = reqParts
                 .map((req) => req
@@ -96,21 +95,9 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
                     .find(txt => txt.match(/^[GET|POST|PUT|DELETE]/)));
 
             request.getContent((body) => {
+                console.log(body);
                 const timestamp = new Date();
-                const respParts = extractParts(atob(body));
-                const respJSON = respParts
-                    .map((resp) => resp
-                        .split(/[\r\n]+/)
-                        .find(str => {
-                            try {
-                                JSON.parse(str);
-                            } catch (e) {
-                                return false;
-                            }
-                            return true;
-                        })
-                    )
-                    .map((txt) => JSON.parse(txt));
+                const respJSON = extractRespParts(body);
 
                 createEntry({
                     timestamp,
@@ -123,8 +110,31 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
     }
 });
 
-function extractParts(body) {
+function extractBaseParts(body) {
     return body
         .split(/--batch[\w-_]+/)
         .filter(x => !x.match(/^\s*$/));
+}
+
+function extractRespParts(body) {
+
+    try {
+        const decodedBody = atob(body);
+        return extractBaseParts(decodedBody)
+            .map((resp) => resp
+                .split(/[\r\n]+/)
+                .find(str => {
+                    try {
+                        JSON.parse(str);
+                    } catch (e) {
+                        return false;
+                    }
+                    return true;
+                })
+            )
+            .map((txt) => JSON.parse(txt));;
+    } catch (error) {
+        // body is not base64 but probably xml
+        return [xml2json(body)];
+    }
 }
