@@ -5,6 +5,7 @@
     --background-secondary: #2d2d2d;
     --background-hover: #031E34;
     --background-selected: #1F5078;
+    --background-error: #662222;
     --green: #50fa7b;
     --yellow: #f1fa8c;
     --red: #ff5555;
@@ -14,6 +15,28 @@
     --purple: #bd93f9;
     --orange: #ffb86c;
     --border: #808080;
+    --white: #fff;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --foreground-primary: #52545e;
+        --foreground-secondary: #282a36;
+        --background-primary: #fff;
+        --background-secondary: #f1f3f4;
+        --background-hover: #f1f6fd;
+        --background-selected: #1a73e8;
+        --background-error: #ff9999;
+        --green: #309649;
+        --yellow: #a8af62;
+        --red: #cc4444;
+        --blue: #6272a4;
+        --pink: #ff79c6;
+        --cyan: #61a3b1;
+        --purple: #9775c7;
+        --orange: #cc9356;
+        --border: #cacdd1;
+    }
 }
 
 @font-face {
@@ -118,6 +141,10 @@ a {
     transition: all 0.3s ease-out;
 }
 
+.entry.error {
+    color: var(--red);
+}
+
 .entry:nth-child(odd) {
     background-color: var(--background-secondary);
 }
@@ -128,7 +155,20 @@ a {
 
 .entry.selected {
     background-color: var(--background-selected);
+    color: var(--foreground-primary);
 }
+
+.entry.selected.error {
+    background-color: var(--background-error);
+    color: var(--foreground-primary);
+}
+
+@media (prefers-color-scheme: light) {
+    .entry.selected, .entry.selected.error {
+        color: var(--background-secondary);
+    }
+}
+
 
 .entry .path {
     white-space: nowrap;
@@ -182,7 +222,7 @@ hr {
     border-radius: 3px;
     padding: 0.2rem;
     margin-inline-end: 0.25rem;
-    color: var(--foreground-secondary);
+    color: var(--white);
 }
 
 .tag.type {

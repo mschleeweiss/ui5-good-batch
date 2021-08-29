@@ -1,6 +1,9 @@
 renderjson.set_icons('+', '-');
 renderjson.set_show_to_level("all");
 
+const HTTP_SUCCESS_LO = 200;
+const HTTP_SUCCESS_HI = 299;
+
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("clear-btn").addEventListener("click", (ev) => {
         document.getElementById("batch-list").innerHTML = "";
@@ -24,7 +27,10 @@ function createEntry(data) {
     timeSpan.append(timeEm.innerText);
 
     const entryDiv = document.createElement("div");
-    entryDiv.className = "entry";
+    entryDiv.classList.add("entry");
+    if (data.status < HTTP_SUCCESS_LO || HTTP_SUCCESS_HI < data.status) {
+        entryDiv.classList.add("error");
+    }
     entryDiv.addEventListener("click", (ev) => {
         for (let el of document.getElementsByClassName("selected")) {
             el.classList.remove("selected");
@@ -84,6 +90,7 @@ function showDetails(data) {
 chrome.devtools.network.onRequestFinished.addListener(request => {
     if (request.request && request.request.url) {
         if (request.request.url.includes('$batch')) {
+            const status = request.response.status;
             const pathname = new URL(request.request.url).pathname
 
             const reqBody = request.request.postData.text;
@@ -95,12 +102,12 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
                     .find(txt => txt.match(/^[GET|POST|PUT|DELETE]/)));
 
             request.getContent((body) => {
-                console.log(body);
                 const timestamp = new Date();
                 const respJSON = extractRespParts(body);
 
                 createEntry({
                     timestamp,
+                    status,
                     pathname,
                     reqTxts,
                     respJSON
