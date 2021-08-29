@@ -9,3 +9,5 @@
 * [x] Add color scheme for light mode
 * [ ] display requests with error response (response code is 400+)
 * [ ] display requests where atomic requests failed (response code is 200+)
+* [ ] add icons to manifest
+* [ ] publish extension
