@@ -60,11 +60,11 @@ function showDetails(data) {
     detailDiv.scrollTop = 0;
     detailDiv.innerHTML = "";
 
-    data.reqTxts.forEach((txt, i) => {
+    data.requests.forEach((req, i) => {
         const txtDiv = document.createElement("div");
-        txtDiv.className = "request"
+        txtDiv.className = "request";
 
-        const matchGroups = txt.match(/^(DELETE|GET|POST|PUT)(.+)(HTTP\/.+)$/)
+        const matchGroups = req.txt.match(/^(DELETE|GET|POST|PUT)(.+)(HTTP\/.+)$/)
         const type = matchGroups[1];
         const path = matchGroups[2].trim();
         const version = matchGroups[3];
@@ -83,7 +83,10 @@ function showDetails(data) {
         txtDiv.append(typeSpan, verSpan, pathSpan);
 
         detailDiv.append(txtDiv);
-        detailDiv.append(renderjson(data.respJSON[i] ?? data.respJSON[data.respJSON.length - 1]));
+        if (req.bodyJSON) {
+            detailDiv.append(renderjson(req.bodyJSON, "@request"));
+        }
+        detailDiv.append(renderjson(data.responses[i] ?? data.responses[data.responses.length - 1], "@response"));
     });
 }
 
@@ -93,24 +96,21 @@ chrome.devtools.network.onRequestFinished.addListener(request => {
             const status = request.response.status;
             const pathname = new URL(request.request.url).pathname
 
-            const reqBody = request.request.postData.text;
-            const reqParts = extractBaseParts(reqBody);
+            console.log(request);
 
-            const reqTxts = reqParts
-                .map((req) => req
-                    .split(/[\r\n]+/)
-                    .find(txt => txt.match(/^[GET|POST|PUT|DELETE]/)));
+            const reqBody = request.request.postData.text;
+            const requests = extractReqParts(reqBody);
 
             request.getContent((body) => {
                 const timestamp = new Date();
-                const respJSON = extractRespParts(body);
+                const responses = extractRespParts(body);
 
                 createEntry({
                     timestamp,
                     status,
                     pathname,
-                    reqTxts,
-                    respJSON
+                    requests,
+                    responses
                 });
             })
         }
@@ -123,25 +123,42 @@ function extractBaseParts(body) {
         .filter(x => !x.match(/^\s*$/));
 }
 
-function extractRespParts(body) {
+function extractReqParts(body) {
+    const atomicRequests = extractBaseParts(body);
+    return atomicRequests
+        .map((req) => {
+            const reqLines = req
+                .split(/[\r\n]+/);
+            const txt =
+                reqLines.find(txt => txt.match(/^[GET|POST|PUT|DELETE]/));
+            const bodyTxt = reqLines.find(isJSON);
+            const bodyJSON = bodyTxt ? JSON.parse(bodyTxt) : bodyTxt;
 
+            return { txt, bodyJSON };
+        });
+}
+
+function extractRespParts(body) {
     try {
         const decodedBody = atob(body);
-        return extractBaseParts(decodedBody)
+        const atomicRequests = extractBaseParts(decodedBody);
+        return atomicRequests
             .map((resp) => resp
                 .split(/[\r\n]+/)
-                .find(str => {
-                    try {
-                        JSON.parse(str);
-                    } catch (e) {
-                        return false;
-                    }
-                    return true;
-                })
+                .find(isJSON)
             )
             .map((txt) => JSON.parse(txt));;
     } catch (error) {
         // body is not base64 but probably xml
         return [xml2json(body)];
     }
+}
+
+function isJSON(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 }

@@ -159,10 +159,21 @@ var module;
         });
     }
 
-    var renderjson = function renderjson(json)
+    function injectLabel(pre, labelTxt) {
+        const labelSpan = document.createElement("span");
+        labelSpan.classList.add("label");
+        labelSpan.innerText = labelTxt;
+    
+        pre.insertBefore(labelSpan, pre.firstChild);
+    }
+
+    var renderjson = function renderjson(json, label)
     {
         var pre = append(document.createElement("pre"), _renderjson(json, "", false, renderjson.show_to_level, renderjson.max_string_length, renderjson.sort_objects));
         pre.className = "renderjson";
+        if (label) {
+            injectLabel(pre, label);
+        }
         return pre;
     }
     renderjson.set_icons = function(show, hide) { renderjson.show = show;

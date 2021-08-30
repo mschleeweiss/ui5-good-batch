@@ -234,6 +234,7 @@ hr {
 }
 
 .request .path {
+    word-break: break-word;
     color: var(--foreground-secondary);
     margin-inline-start: 0.5rem;
 }
@@ -244,6 +245,17 @@ hr {
     overflow: auto;
     background-color: var(--background-primary);
     padding: 0.5rem;
+}
+
+.renderjson + .renderjson {
+    margin-top: 1rem;
+}
+
+.renderjson .label {
+    font-weight: 900;
+    text-transform: uppercase;
+    display: block;
+    color: var(--cyan);
 }
 
 .renderjson a {

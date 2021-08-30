@@ -11,7 +11,7 @@
 * [ ] migrate to company git
 * [ ] add icons to manifest
 * [ ] publish extension
-* [ ] display requests with error response (response code is 400+)
+* [x] display requests with error response (response code is 400+)
 * [ ] display requests where atomic requests failed (response code is 200+)
-* [ ] display body of POST/PUT request
-* [ ] display label "request/response before json
+* [x] display body of POST/PUT request
+* [x] display label "request/response before json
