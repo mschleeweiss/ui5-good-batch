@@ -1,5 +1,5 @@
 {
-    "name": "ui5-good-batch",
+    "name": "OData Batch Viewer",
     "description": "Make those unreadable batch requests readable!",
     "version": "1.0",
     "manifest_version": 3,

@@ -169,7 +169,9 @@ a {
     }
 }
 
-
+.entry .time {
+    font-style: italic;
+}
 .entry .path {
     white-space: nowrap;
     overflow: hidden;

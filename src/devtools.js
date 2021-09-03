@@ -1,1 +1,1 @@
-chrome.devtools.panels.create("ui5-good-batch", null, '/src/html/panel.html');
+chrome.devtools.panels.create("OBV", null, '/src/html/panel.html');
