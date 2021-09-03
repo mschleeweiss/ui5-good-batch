@@ -1,4 +1,6 @@
-class Entry {
+import { xml2json } from "./lib/xml2json.js"
+
+export default class Entry {
     timestamp;
     status;
     url;

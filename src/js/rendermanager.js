@@ -1,4 +1,6 @@
-class RenderManager {
+import { renderjson } from "./lib/renderjson.js";
+
+export default class RenderManager {
 
     masterList;
     detailList;
@@ -49,7 +51,6 @@ class RenderManager {
 
     async renderEntryDetail(entry) {
         await this.whenDOMReady();
-        const div = this._createEntryDetail(entry);
 
         if (!this.messagePage.classList.contains("hidden")) {
             this.messagePage.classList.add("hidden");
@@ -59,7 +60,7 @@ class RenderManager {
         this.detailList.innerHTML = "";
 
         entry.requests.forEach((req, i) => {
-            const txtDiv = this._createEntryDetail(entry);
+            const txtDiv = this._createEntryDetail(req);
 
             this.detailList.append(txtDiv);
             if (req.bodyJSON) {
@@ -93,13 +94,13 @@ class RenderManager {
                     if (!ev.target.classList.contains("selected")) {
                         ev.target.classList.add("selected");
                     }
-                    showDetails(entry);
+                    this.renderEntryDetail(entry);
                 }
             }
         });
     }
 
-    _createEntryDetail(entry) {
+    _createEntryDetail(req) {
         const matchGroups = req.txt.match(/^(DELETE|GET|POST|PUT)(.+)(HTTP\/.+)$/)
         const type = matchGroups[1];
         const path = matchGroups[2].trim();

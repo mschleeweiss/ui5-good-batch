@@ -50,8 +50,7 @@
 //     .object.syntax ("{", "}")
 //     .array.syntax  ("[", "]")
 
-var module;
-(module||{}).exports = renderjson = (function() {
+export const renderjson = (function() {
     var themetext = function(/* [class, text]+ */) {
         var spans = [];
         while (arguments.length)
