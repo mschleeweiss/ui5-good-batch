@@ -77,8 +77,8 @@ export default class RenderManager {
                     for (let el of document.getElementsByClassName("selected")) {
                         el.classList.remove("selected");
                     }
-                    if (!ev.target.classList.contains("selected")) {
-                        ev.target.classList.add("selected");
+                    if (!ev.currentTarget.classList.contains("selected")) {
+                        ev.currentTarget.classList.add("selected");
                     }
                     this.renderEntryDetail(entry);
                 }
