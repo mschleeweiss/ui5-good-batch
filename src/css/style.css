@@ -172,6 +172,7 @@ a {
 .entry .time {
     font-style: italic;
 }
+
 .entry .path {
     white-space: nowrap;
     overflow: hidden;
@@ -252,7 +253,7 @@ hr {
     font-size: 0.65rem;
 }
 
-.renderjson + .renderjson {
+.renderjson+.renderjson {
     margin-top: 0.5rem;
 }
 
@@ -267,6 +268,10 @@ hr {
     color: var(--cyan);
     font-weight: 900;
     text-transform: uppercase;
+}
+
+.renderjson > div {
+    overflow: auto;
 }
 
 .renderjson a {

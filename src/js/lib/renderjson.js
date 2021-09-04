@@ -168,7 +168,8 @@ export const renderjson = (function() {
 
     var renderjson = function renderjson(json, label)
     {
-        var pre = append(document.createElement("pre"), _renderjson(json, "", false, renderjson.show_to_level, renderjson.max_string_length, renderjson.sort_objects));
+        var div = append(document.createElement("div"), _renderjson(json, "", false, renderjson.show_to_level, renderjson.max_string_length, renderjson.sort_objects));
+        var pre = append(document.createElement("pre"), div);
         pre.className = "renderjson";
         if (label) {
             injectLabel(pre, label);

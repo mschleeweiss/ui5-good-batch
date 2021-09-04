@@ -20,12 +20,12 @@
 * [x] display body of POST/PUT request
 * [x] display label "request/response" before json
 * [x] add license
-* [ ] switch to modern modules https://javascript.info/modules-intro
+* [x] switch to modern modules https://javascript.info/modules-intro
+* [x] "req/resp" label shouldn't go away when scrolling horizontally (introduce nested divs for renderjson box?)
 * [ ] migrate to company git
 * [ ] add icons to manifest
 * [ ] publish extension
 * [ ] display requests where atomic requests failed (response code is 200+)
-* [ ] "req/resp" label shouldn't go away when scrolling horizontally (introduce nested divs for renderjson box?)
 * [ ] open atomic GET request in a new tab
 * [ ] rerun atomic requests (click on the path of the response to run this request again)
 * [ ] make extension available in Firefox/Edge
