@@ -53,5 +53,5 @@ This is an extension for the Chrome Dev Tools. It adds a new panel that will pre
 
 * Logo made by [Pixelmeetup](https://www.flaticon.com/authors/pixelmeetup) from [https://www.flaticon.com/](www.flaticon.com).
 * Icons made by [FontAwesome](https://fontawesome.com/)
-* JSON rendered by [renderjson](http://caldwell.github.io/renderjson/).
+* JSON rendered by [renderjson](https://github.com/caldwell/renderjson).
 * XML transformed by [xml2json](https://github.com/enkidoo-ai/xml2json).
