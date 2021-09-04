@@ -13,35 +13,23 @@ export default class RenderManager {
         renderjson.set_icons('+', '-');
         renderjson.set_show_to_level("all");
 
-        this.whenDOMReady().then(() => {
-            this.masterList = document.getElementById("batch-list");
-            this.detailList = document.getElementById("resp-list");
-            this.clearButton = document.getElementById("clear-btn");
-            this.messagePage = document.getElementById("messagepage");
+        this.masterList = document.getElementById("batch-list");
+        this.detailList = document.getElementById("resp-list");
+        this.clearButton = document.getElementById("clear-btn");
+        this.messagePage = document.getElementById("messagepage");
 
-            this.clearButton.addEventListener("click", (ev) => {
-                this.masterList.innerHTML = "";
-                this.detailList.innerHTML = "";
-                this.messagePage.classList.remove("hidden");
-            });
+        this.clearButton.addEventListener("click", (ev) => {
+            this.masterList.innerHTML = "";
+            this.detailList.innerHTML = "";
+            this.messagePage.classList.remove("hidden");
         });
-    }
-
-    whenDOMReady() {
-        if (!this._domReadyPromise) {
-            this._domReadyPromise = new Promise((resolve) => {
-                document.addEventListener("DOMContentLoaded", resolve);
-            });
-        }
-        return this._domReadyPromise;
     }
 
     /**
      * 
      * @param {Entry} entry 
      */
-    async renderEntry(entry) {
-        await this.whenDOMReady();
+    renderEntry(entry) {
         const div = this._createEntry(entry);
         this.masterList.append(div);
         div.scrollIntoView({
@@ -49,9 +37,7 @@ export default class RenderManager {
         });
     }
 
-    async renderEntryDetail(entry) {
-        await this.whenDOMReady();
-
+    renderEntryDetail(entry) {
         if (!this.messagePage.classList.contains("hidden")) {
             this.messagePage.classList.add("hidden");
         }

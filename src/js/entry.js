@@ -8,19 +8,29 @@ export default class Entry {
     requests = [];
     responses = [];
 
-    constructor(request) {
-        this.batchRequest = request;
+    /**
+     * 
+     * @param {Object} batchRequest 
+     * @param {Object[]} requests 
+     * @param {Object[]} responses 
+     */
+    constructor(batchRequest, requests, responses) {
+        this.batchRequest = batchRequest;
         this.timestamp = new Date();
-        this.status = request.response.status;
-        this.url = new URL(request.request.url);
+        this.status = batchRequest.response.status;
+        this.url = new URL(batchRequest.request.url);
+        this.requests = requests;
+        this.responses = responses;
     }
 
-    async parse() {
-        const reqBody = this.batchRequest.request.postData.text;
-        this.requests = BatchParser.extractRequests(reqBody);
+    static async build(request) {
+        const reqBody = request.request.postData.text;
+        const requests = BatchParser.extractRequests(reqBody);
 
-        const respBody = await BatchParser.getContent(this.batchRequest);
-        this.responses = BatchParser.extractResponses(respBody);
+        const respBody = await BatchParser.getContent(request);
+        const responses = BatchParser.extractResponses(respBody);
+
+        return new Entry(request, requests, responses);
     }
 }
 

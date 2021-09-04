@@ -6,8 +6,7 @@ const rm = new RenderManager();
 chrome.devtools.network.onRequestFinished.addListener(async request => {
     if (request.request && request.request.url) {
         if (request.request.url.includes('$batch')) {
-            const entry = new Entry(request);
-            await entry.parse();
+            const entry = await Entry.build(request);
             rm.renderEntry(entry);
         }
     }
