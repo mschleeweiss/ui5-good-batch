@@ -40,6 +40,7 @@ This is an extension for the Chrome Dev Tools. It adds a new panel that will pre
 * [x] switch to modern modules https://javascript.info/modules-intro
 * [x] "req/resp" label shouldn't go away when scrolling horizontally (introduce nested divs for renderjson box?)
 * [x] add icons to manifest
+* [x] encoding of special chars in responses seems broken
 * [ ] display requests where atomic requests failed (response code is 200+)
 * [ ] migrate to company git
 * [ ] publish extension
@@ -47,7 +48,6 @@ This is an extension for the Chrome Dev Tools. It adds a new panel that will pre
 * [ ] open atomic GET request in a new tab
 * [ ] rerun atomic requests (click on the path of the response to run this request again)
 * [ ] make extension available in Firefox/Edge
-* [ ] encoding of special chars in responses seems broken
 
 ## Credits
 

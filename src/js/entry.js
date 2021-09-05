@@ -28,6 +28,7 @@ export default class Entry {
         const requests = BatchParser.extractRequests(reqBody);
 
         const respBody = await BatchParser.getContent(request);
+        console.log(respBody)
         const responses = BatchParser.extractResponses(respBody);
 
         return new Entry(request, requests, responses);
@@ -65,7 +66,7 @@ class BatchParser {
 
     static extractResponses(body) {
         try {
-            const decodedBody = atob(body);
+            const decodedBody = BatchParser.b64DecodeUnicode(body);
             const atomicRequests = BatchParser.extractBase(decodedBody);
             return atomicRequests
                 .map((resp) => resp
@@ -86,5 +87,15 @@ class BatchParser {
             return false;
         }
         return true;
+    }
+
+    static b64DecodeUnicode(str) {
+        return decodeURIComponent(atob(str)
+            .split('')
+            .map((c) => {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join('')
+        );
     }
 }
