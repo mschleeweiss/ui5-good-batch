@@ -17,6 +17,12 @@
 
 This is an extension for the Chrome Dev Tools. It adds a new panel that will present the OData batch requests of the current page in a structured and accessible way. This allows you to debug batch requests much faster.
 
+<h1 align="center" style="font-color: red">
+  This extension offers a similar functionality to SAP's official <a href="https://chrome.google.com/webstore/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo?hl=de">UI5 Inspector</a>.
+</h1>
+
+Having two tools which basically do the same seems a little pointless, so development here will be put on hold. If I find the time I would like to contribute to the official SAP extension instead.
+
 ## Manual installation
 
 1. Open the Extension Management page by navigating to `chrome://extensions`.
